@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-container">
+        <!-- <h2>Login</h2> -->
+        <div class="toggle-container">
+            <button id="face-login-btn" class="active">Attendance</button>
+            <!-- <button id="otp-login-btn">OTP Login</button> -->
+        </div>
+
+        <form id="loginForm" action="/login" method="POST">
+            <!-- Face Login Section -->
+            <div id="face-login-section" class="login-method">
+                <!-- Username input -->
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+                <!-- Webcam for face capture -->
+                <div class="form-group">
+                    <label for="faceData">Capture Face</label>
+                    <video id="video" width="320" height="240" autoplay></video>
+                    <button type="button" id="capture-btn">Capture Face</button>
+                    <input type="file" id="photo" name="faceData" style="display: none;">
+                    <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+                </div>
+            </div>
+
+           
+
+            <button type="submit" id="login-btn">Submit</button>
+        </form>
+    </div>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

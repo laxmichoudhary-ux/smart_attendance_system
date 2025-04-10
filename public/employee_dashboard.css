@@ -1,0 +1,30 @@
+body {
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Optional custom styles */
+.card-header {
+  font-weight: bold;
+}
+
+#uploadPhoto {
+  max-width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#profilePhoto {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
+
+footer {
+  border-top: 3px solid #ffffff22;
+}
+
+
+
