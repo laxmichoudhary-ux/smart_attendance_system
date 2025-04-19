@@ -1,392 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HR Portal Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #f4f6fa;
-        }
-        .card, .modal-content {
-            border-radius: 1.25rem;
-        }
-        .navbar-brand {
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HR Dashboard - EliteConnect</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .sidebar {
+      height: 100vh;
+      background-color: #343a40;
+      padding-top: 1rem;
+    }
+    .sidebar a {
+      color: #ffffff;
+      padding: 10px;
+      display: block;
+      text-decoration: none;
+    }
+    .sidebar a:hover {
+      background-color: #495057;
+    }
+    .header {
+      background-color: #ffffff;
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .profile-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+    .card-icon {
+      font-size: 1.5rem;
+    }
+    table {
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-indigo-600 shadow-lg py-3">
-        <div class="container-fluid px-4">
-            <a class="navbar-brand text-white" href="#">HR Portal</a>
-            <div class="collapse navbar-collapse justify-content-end">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link text-white" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#">Employee Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#">Logout</a></li>
-                </ul>
-            </div>
-        </div>
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 sidebar">
+      <h4 class="text-white text-center">EliteConnect</h4>
+      <a href="#"><i class="bi bi-speedometer2"></i> Dashboard</a>
+      <a href="#"><i class="bi bi-people"></i> Employees</a>
+      <a href="#"><i class="bi bi-calendar-check"></i> Attendance</a>
+      <a href="#"><i class="bi bi-journal"></i> Reports</a>
+      <a href="#"><i class="bi bi-box-arrow-right"></i> Logout</a>
     </nav>
 
-    <div class="container my-5">
-        <div class="row g-4 mb-4">
-            <div class="col-md-4">
-                <div class="bg-green-500 text-white rounded-2xl p-4 shadow">
-                    <h5>Total Employees</h5>
-                    <h2 id="totalEmployees">25</h2>
+    <main class="col-md-10 ms-sm-auto">
+      <div class="header d-flex justify-content-between align-items-center">
+        <h3 class="mb-0">HR Dashboard</h3>
+        <div class="d-flex align-items-center">
+          <img src="company_logo.png" alt="Logo" class="me-2" style="width: 40px; height: 40px;">
+          <button class="btn btn-outline-secondary btn-sm">Logout</button>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-3">
+          <div class="card text-bg-primary mb-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="card-title">Present Today</h6>
+                  <h3 id="presentCount">--</h3>
                 </div>
+                <i class="bi bi-person-check-fill card-icon"></i>
+              </div>
             </div>
-            <div class="col-md-4">
-                <div class="bg-blue-500 text-white rounded-2xl p-4 shadow">
-                    <h5>Present Today</h5>
-                    <h2 id="presentToday">21</h2>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card text-bg-warning mb-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="card-title">Late Comers</h6>
+                  <h3 id="lateCount">--</h3>
                 </div>
+                <i class="bi bi-clock-fill card-icon"></i>
+              </div>
             </div>
-            <div class="col-md-4">
-                <div class="bg-red-500 text-white rounded-2xl p-4 shadow">
-                    <h5>Absent Today</h5>
-                    <h2 id="absentToday">4</h2>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card text-bg-danger mb-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="card-title">Absent</h6>
+                  <h3 id="absentCount">--</h3>
                 </div>
+                <i class="bi bi-person-x-fill card-icon"></i>
+              </div>
             </div>
+          </div>
         </div>
 
-        <!-- Button to trigger modal -->
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="section-title">Employee List</h5>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Add Employee</button>
-        </div>
-
-        <!-- Employee Table -->
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Role</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="employeeList">
-                    <!-- Dynamic rows go here -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Attendance Records -->
-        <div class="my-5">
-            <h5 class="section-title">Attendance Records</h5>
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Employee ID</th>
-                            <th>Name</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                        </tr>
-                    </thead>
-                    <tbody id="attendanceRecords">
-                        <!-- Attendance rows -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Attendance Chart -->
-        <div class="bg-white p-4 rounded-2xl shadow">
-            <h5 class="section-title">Weekly Attendance Overview</h5>
-            <canvas id="attendanceChart" height="120"></canvas>
-        </div>
-    </div>
-
-    <!-- Add Employee Modal -->
-    <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content p-3">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addEmployeeModalLabel">Add New Employee</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="col-md-3">
+          <div class="card text-bg-success mb-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="card-title">Leave Requests</h6>
+                  <h3 id="leaveCount">--</h3>
                 </div>
-                <div class="modal-body">
-                    <form id="addEmployeeForm">
-                        <input type="text" id="empName" class="form-control mb-2" placeholder="Employee Name">
-                        <input type="text" id="empId" class="form-control mb-2" placeholder="Employee ID">
-                        <input type="text" id="empRole" class="form-control mb-2" placeholder="Role">
-                        <input type="email" id="empEmail" class="form-control mb-2" placeholder="Email">
-                        <input type="tel" id="empPhone" class="form-control mb-3" placeholder="Phone Number">
-                        <button type="button" class="btn btn-success w-100" id="addEmployee">Submit</button>
-                    </form>
-                </div>
+                <i class="bi bi-envelope-paper-fill card-icon"></i>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <footer class="bg-gray-100 text-center text-gray-600 py-4 mt-5">
-        &copy; 2025 Company Name. All rights reserved.
-    </footer>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="card mb-4">
+            <div class="card-header">Attendance Overview</div>
+            <div class="card-body">
+              <div id="attendanceChart"></div>
+            </div>
+          </div>
+        </div>
 
-    <script>
-        const ctx = document.getElementById('attendanceChart').getContext('2d');
-        const attendanceChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
-                datasets: [
-                    {
-                        label: 'Present',
-                        data: [21, 23, 20, 24, 22],
-                        borderColor: '#4f46e5',
-                        backgroundColor: 'rgba(79, 70, 229, 0.2)',
-                        tension: 0.4,
-                        fill: true
-                    },
-                    {
-                        label: 'Absent',
-                        data: [4, 2, 5, 1, 3],
-                        borderColor: '#ef4444',
-                        backgroundColor: 'rgba(239, 68, 68, 0.2)',
-                        tension: 0.4,
-                        fill: true
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { position: 'bottom' }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: '#e5e7eb' }
-                    },
-                    x: {
-                        grid: { color: '#e5e7eb' }
-                    }
-                }
-            }
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <div class="card-header">Recent Activities</div>
+            <div class="card-body">
+              <ul id="activityLog" class="list-group"></ul>
+              <button id="showAllBtn" class="btn btn-sm btn-link mt-2">Show All</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-header">
+          All Employees Attendance
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody id="attendanceTableBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <footer class="text-center py-3">
+        <small>&copy; 2025 EliteConnect. All rights reserved.</small>
+      </footer>
+    </main>
+  </div>
+</div>
+
+<script src="hr_dashboard.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HR Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #f4f6fa;
-        }
-        .card {
-            border-radius: 1.25rem;
-        }
-        .navbar-brand {
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        #addEmployeeForm, #editProfileForm {
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-indigo-600 shadow-lg py-3">
-        <div class="container-fluid px-4">
-            <a class="navbar-brand text-white" href="#">HR Dashboard</a>
-            <div class="collapse navbar-collapse justify-end">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="company-portal.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="employee_dashboard.html">Employee Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container mx-auto px-4 py-6">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div class="bg-green-500 text-white rounded-2xl p-4 shadow-md">
-                <h5 class="text-lg font-semibold">Total Employees</h5>
-                <p class="text-3xl mt-2" id="totalEmployees">25</p>
-            </div>
-            <div class="bg-blue-500 text-white rounded-2xl p-4 shadow-md">
-                <h5 class="text-lg font-semibold">Present Today</h5>
-                <p class="text-3xl mt-2" id="presentToday">21</p>
-            </div>
-            <div class="bg-red-500 text-white rounded-2xl p-4 shadow-md">
-                <h5 class="text-lg font-semibold">Absent Today</h5>
-                <p class="text-3xl mt-2" id="absentToday">4</p>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div class="bg-white rounded-2xl shadow-md p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h5 class="section-title">Employee Management</h5>
-                    <button class="btn btn-sm btn-primary" onclick="toggleForm('addEmployeeForm')">Add Employee</button>
-                </div>
-                <form id="addEmployeeForm" class="space-y-3">
-                    <input type="text" id="empName" class="form-control" placeholder="Employee Name">
-                    <input type="text" id="empId" class="form-control" placeholder="Employee ID">
-                    <input type="text" id="empRole" class="form-control" placeholder="Role">
-                    <input type="email" id="empEmail" class="form-control" placeholder="Email">
-                    <input type="tel" id="empPhone" class="form-control" placeholder="Phone Number">
-                    <button id="addEmployee" class="btn btn-success w-full" type="button">Submit</button>
-                </form>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-md p-6 overflow-auto">
-                <h5 class="section-title">Employee List</h5>
-                <table class="table table-bordered table-hover">
-                    <thead class="table-light">
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Role</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="employeeList">
-                        Employee rows -->
-                    <!-- </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div class="bg-white rounded-2xl shadow-md p-6 overflow-auto">
-                <h5 class="section-title">Employee Attendance Records</h5>
-                <table class="table table-striped table-bordered">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Employee ID</th>
-                            <th>Name</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                        </tr>
-                    </thead>
-                    <tbody id="attendanceRecords">
-                        <!-- Attendance data -->
-                    <!-- </tbody>
-                </table>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-md p-6">
-                <h5 class="section-title">Weekly Attendance Overview</h5>
-                <canvas id="attendanceChart" height="120"></canvas>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-2xl shadow-md p-6">
-            <div class="flex justify-between items-center mb-4">
-                <h5 class="section-title">My Profile</h5>
-                <button class="btn btn-sm btn-warning" onclick="toggleForm('editProfileForm')">Edit Profile</button>
-            </div>
-            <form id="editProfileForm" class="space-y-3">
-                <input type="text" class="form-control" placeholder="Name">
-                <input type="email" class="form-control" placeholder="Email">
-                <input type="text" class="form-control" placeholder="Department">
-                <input type="tel" class="form-control" placeholder="Contact Number">
-                <button class="btn btn-warning w-full" type="button">Update</button>
-            </form>
-        </div>
-    </div>
-
-    <footer class="bg-gray-100 text-center text-gray-600 py-4 mt-10">
-        &copy; 2025 Company Name. All rights reserved.
-    </footer>
-
-    <script>
-        function toggleForm(id) {
-            const form = document.getElementById(id);
-            form.style.display = form.style.display === 'none' || form.style.display === '' ? 'block' : 'none';
-        }
-
-        const ctx = document.getElementById('attendanceChart').getContext('2d');
-        const attendanceChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
-                datasets: [
-                    {
-                        label: 'Present',
-                        data: [21, 23, 20, 24, 22],
-                        borderColor: '#4f46e5',
-                        backgroundColor: 'rgba(79, 70, 229, 0.2)',
-                        tension: 0.4,
-                        fill: true,
-                    },
-                    {
-                        label: 'Absent',
-                        data: [4, 2, 5, 1, 3],
-                        borderColor: '#ef4444',
-                        backgroundColor: 'rgba(239, 68, 68, 0.2)',
-                        tension: 0.4,
-                        fill: true,
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { position: 'bottom' }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: '#e5e7eb' }
-                    },
-                    x: {
-                        grid: { color: '#e5e7eb' }
-                    }
-                }
-            }
-        });
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
-
-
- -->
+</html>  

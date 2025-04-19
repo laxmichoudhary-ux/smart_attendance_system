@@ -97,6 +97,45 @@ app.get('/logout', (req, res) => {
   });
 
 
+  app.get('/getAllAttendance', (req, res) => {
+    const fetchSql = `
+      SELECT u.username, u.employee_id, a.date, a.time
+      FROM attendance a
+      JOIN users u ON a.employee_id = u.employee_id
+      ORDER BY a.time DESC
+    `;
+  
+    db.query(fetchSql, (err, records) => {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          message: 'Failed to fetch attendance records',
+          attendance: []
+        });
+      }
+  
+      const formattedRecords = records.map(record => {
+        const date = new Date(record.date);
+        const time = new Date(record.time);
+  
+        return {
+          ...record,
+          date: date.toLocaleDateString('en-IN'),
+          time: time.toLocaleTimeString('en-IN', {
+            hour: '2-digit', minute: '2-digit', hour12: true
+          })
+        };
+      });
+  
+      res.json({
+        success: true,
+        message: 'Attendance fetched successfully',
+        attendance: formattedRecords
+      });
+    });
+  });
+
+
   app.get('/getAttendance', (req, res) => {
     if (!req.session || !req.session.employee_id) {
         return res.status(401).json({ success: false, message: 'Unauthorized: No session' });

@@ -59,6 +59,13 @@ document.addEventListener("DOMContentLoaded", () => {
           console.error('Error fetching attendance:', err);
         });
     }
+
+    const logoutButton = document.getElementById("logoutButton");
+    if (logoutButton) {
+      logoutButton.addEventListener("click", () => {
+        window.location.href = "/logout";  // This calls your backend route
+      });
+    }
     
   
     // Redirect to login.html
