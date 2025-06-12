@@ -137,8 +137,17 @@ app.get('/logout', (req, res) => {
 
 
   app.get('/getAttendance', (req, res) => {
+    // if (!req.session || !req.session.employee_id) {
+    //     return res.status(401).json({ success: false, message: 'Unauthorized: No session' });
+    // }
+
     if (!req.session || !req.session.employee_id) {
-        return res.status(401).json({ success: false, message: 'Unauthorized: No session' });
+        // Instead of sending 401 error, send a safe success response
+        return res.json({
+            success: true,
+            message: 'No attendance records yet',
+            attendance: []
+        });
     }
 
     const employee_id = req.session.employee_id;
@@ -187,7 +196,7 @@ app.get('/logout', (req, res) => {
 
   app.get('/employeeDashboard', (req, res) => {
     if (req.session.username && req.session.employee_id) {
-        console.log('Serving dashboard for:', req.session.username);
+       console.log('Serving dashboard for:', req.session.username);
         const filePath = path.join(__dirname, '../public', 'employee_dashboard.html');
             // Optional: prevent caching
              res.setHeader('Cache-Control', 'no-store');
@@ -198,7 +207,7 @@ app.get('/logout', (req, res) => {
 
      
     } else {
-        console.log('User not logged in');
+       // console.log('User not logged in');
       res.redirect('/'); // Redirect to login if not logged in
     }
   });
